@@ -133,6 +133,8 @@ int main(int argc, char** argv) {
 
     /* Read the port number from the first command line argument. */
     int port = atoi(argv[1]);
+    //pthread_t clientThread[25];
+    //int j = 0;
 
     /* Create a socket to which clients will connect. */
     int server_sock = socket(AF_INET6, SOCK_STREAM, 0);
@@ -197,7 +199,8 @@ int main(int argc, char** argv) {
     while(1) {
         /* Declare a socket for the client connection. */
         int sock;
-        char buffer[256];
+        //char buffer[256];
+
 
         /* Another address structure.  This time, the system will automatically
          * fill it in, when we accept a connection, to tell us where the
@@ -216,7 +219,7 @@ int main(int argc, char** argv) {
             perror("Error accepting connection");
             exit(1);
         }
-
+        //pthread_join(clientThread[j],retval);
         /* At this point, you have a connected socket (named sock) that you can
          * use to send() and recv(). */
 

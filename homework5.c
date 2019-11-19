@@ -85,7 +85,7 @@ void serve_request(int client_fd){
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/vnd.microsoft.icon; charset=UTF-8\r\n\r\n";
         //runs if there is a jpg
-    } else if(strstr(requested_file, ".jpg") != NULL ||strstr(requested_file, ".jpeg") != NULL ) {
+    } else if(strstr(requested_file, ".jpg") != NULL) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/jpeg; charset=UTF-8\r\n\r\n";
 

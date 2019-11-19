@@ -85,32 +85,27 @@ void serve_request(int client_fd){
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/vnd.microsoft.icon; charset=UTF-8\r\n\r\n";
         //runs if there is a jpg
-    }
-    if(strstr(requested_file, ".jpg") ) {
+    } else if(strstr(requested_file, ".jpg") ) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/jpeg; charset=UTF-8\r\n\r\n";
 
         //runs if there is html
-    }
-    if(strstr(requested_file, ".html") != NULL  ) {
+    }else if(strstr(requested_file, ".html") != NULL  ) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: text/html; charset=UTF-8\r\n\r\n";
 
         //runs if .gif
-    }
-    if(strstr(requested_file, ".gif") != NULL) {
+    }else if(strstr(requested_file, ".gif") != NULL) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/gif; charset=UTF-8\r\n\r\n";
 
         //runs if .pdf
-    }
-    if(strstr(requested_file, ".pdf") != NULL) {
+    }else if(strstr(requested_file, ".pdf") != NULL) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: application/pdf; charset=UTF-8\r\n\r\n";
 
         //runs if .png
-    }
-    if(strstr(requested_file, ".png") != NULL) {
+    } else if(strstr(requested_file, ".png") != NULL) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/png; charset=UTF-8\r\n\r\n";
     }

@@ -80,17 +80,17 @@ void serve_request(int client_fd){
     printf("%s", filename);
 
 
-        //runs if there is an icon
+    //runs if there is an icon
     if(strstr(requested_file, ".ico") != NULL) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/vnd.microsoft.icon; charset=UTF-8\r\n\r\n";
         //runs if there is a jpg
-    } else if(strstr(requested_file, ".jpg") != NULL) {
+    } else if(strstr(requested_file, ".jpg") != NULL ||strstr(requested_file, ".jpeg") != NULL ) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/jpeg; charset=UTF-8\r\n\r\n";
 
         //runs if there is html
-    }else if(strstr(requested_file, ".html") != NULL ) {
+    }else if(strstr(requested_file, ".html") != NULL  /* || strstr(requested_file, ".htm") != NULL*/) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: text/html; charset=UTF-8\r\n\r\n";
 
@@ -112,7 +112,8 @@ void serve_request(int client_fd){
 
 
 
-  read_fd = open(filename,0,0);
+
+    read_fd = open(filename,0,0);
   while(1){
     bytes_read = read(read_fd,send_buf,4096);
     if(bytes_read == 0)

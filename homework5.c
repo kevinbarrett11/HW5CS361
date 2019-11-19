@@ -62,8 +62,6 @@ void serve_request(int client_fd){
   char client_buf[4096];
   char send_buf[4096];
   char filename[4096];
-    char filenameBegin[4096] = "/WWW";
-
     char * requested_file;
   memset(client_buf,0,4096);
   memset(filename,0,4096);
@@ -77,7 +75,7 @@ void serve_request(int client_fd){
   send(client_fd,request_str,strlen(request_str),0);
   // take requested_file, add a . to beginning, open that file
   filename[0] = '.';
-    strncpy(&filename[1],filenameBegin,4095);
+    strncpy(&filename[1],"/WWW",4095);
   strncpy(&filename[5],requested_file,4095);
     printf("%s", filename);
 
@@ -110,8 +108,6 @@ void serve_request(int client_fd){
     } else if(strstr(requested_file, ".png") != NULL) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/png; charset=UTF-8\r\n\r\n";
-    } else {
-        request_str = "HTTP/1.0 404 Not Found\r\n";
     }
 
 
@@ -227,7 +223,7 @@ int main(int argc, char** argv) {
             exit(1);
         }
 
-        if( pthread_create(&clientThread[j], NULL, serve_request , &sock) != 0 )
+        if( pthread_create(&clientThread[j], NULL, (void*)serve_request , &sock) != 0 )
             printf("Failed to create thread\n");
 
 

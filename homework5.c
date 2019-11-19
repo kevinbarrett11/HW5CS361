@@ -108,6 +108,8 @@ void serve_request(int client_fd){
     } else if(strstr(requested_file, ".png") != NULL) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/png; charset=UTF-8\r\n\r\n";
+    } else {request_str = "HTTP/1.0 200 OK\r\n";
+
     }
 
 
@@ -224,7 +226,7 @@ int main(int argc, char** argv) {
             exit(1);
         }
 
-        if( pthread_create(&clientThread[j], NULL, serve_request , &sock) != 0 )
+        if( pthread_create(&clientThread[j], NULL, (void*)serve_request , &sock) != 0 )
             printf("Failed to create thread\n");
 
 

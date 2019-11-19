@@ -90,7 +90,7 @@ void serve_request(int client_fd){
                 "Content-type: image/jpeg; charset=UTF-8\r\n\r\n";
 
         //runs if there is html
-    }else if(strstr(requested_file, ".html") != NULL  /* || strstr(requested_file, ".htm") != NULL*/) {
+    }else if(strstr(requested_file, ".html") != NULL ) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: text/html; charset=UTF-8\r\n\r\n";
 

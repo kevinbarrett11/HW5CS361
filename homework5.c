@@ -108,10 +108,7 @@ void serve_request(int client_fd){
     } else if(strstr(requested_file, ".png") != NULL) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/png; charset=UTF-8\r\n\r\n";
-    } else {request_str = "HTTP/1.0 404 Not Found\r\n";
-
-    }
-
+    } 
 
 
 

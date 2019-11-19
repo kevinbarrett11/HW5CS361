@@ -62,7 +62,9 @@ void serve_request(int client_fd){
   char client_buf[4096];
   char send_buf[4096];
   char filename[4096];
-  char * requested_file;
+    char filenameBegin[4096] = "/WWW";
+
+    char * requested_file;
   memset(client_buf,0,4096);
   memset(filename,0,4096);
   while(1){
@@ -75,7 +77,9 @@ void serve_request(int client_fd){
   send(client_fd,request_str,strlen(request_str),0);
   // take requested_file, add a . to beginning, open that file
   filename[0] = '.';
-  strncpy(&filename[1],requested_file,4095);
+    strncpy(&filename[1],filenameBegin,4095);
+  strncpy(&filename[5],requested_file,4095);
+    printf("%s", filename);
 
 
         //runs if there is an icon
@@ -106,6 +110,8 @@ void serve_request(int client_fd){
     } else if(strstr(requested_file, ".png") != NULL) {
         request_str = "HTTP/1.0 200 OK\r\n"
                 "Content-type: image/png; charset=UTF-8\r\n\r\n";
+    } else {
+        request_str = "HTTP/1.0 404 Not Found\r\n";
     }
 
 
@@ -133,8 +139,7 @@ int main(int argc, char** argv) {
 
     /* Read the port number from the first command line argument. */
     int port = atoi(argv[1]);
-    //pthread_t clientThread[25];
-    //int j = 0;
+
 
     /* Create a socket to which clients will connect. */
     int server_sock = socket(AF_INET6, SOCK_STREAM, 0);
@@ -195,11 +200,13 @@ int main(int argc, char** argv) {
         perror("Error listening for connections");
         exit(1);
     }
+    pthread_t clientThread[60];
+    int j = 0;
 
     while(1) {
         /* Declare a socket for the client connection. */
         int sock;
-        //char buffer[256];
+        char buffer[256];
 
 
         /* Another address structure.  This time, the system will automatically
@@ -219,7 +226,22 @@ int main(int argc, char** argv) {
             perror("Error accepting connection");
             exit(1);
         }
-        //pthread_join(clientThread[j],retval);
+
+        if( pthread_create(&clientThread[j], NULL, serve_request , &sock) != 0 )
+            printf("Failed to create thread\n");
+
+
+
+        if( j >= 50)
+        {
+            j = 0;
+            while(j < 50)
+            {
+                pthread_join(clientThread[j++],NULL);
+            }
+            j = 0;
+        }
+
         /* At this point, you have a connected socket (named sock) that you can
          * use to send() and recv(). */
 

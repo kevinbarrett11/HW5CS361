@@ -224,7 +224,7 @@ int main(int argc, char** argv) {
             exit(1);
         }
 
-        if( pthread_create(&clientThread[j], NULL, (void*)serve_request , &sock) != 0 )
+        if( pthread_create(&clientThread[j], NULL, serve_request , &sock) != 0 )
             printf("Failed to create thread\n");
 
 
